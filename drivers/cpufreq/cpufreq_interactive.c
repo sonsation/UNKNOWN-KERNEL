@@ -2028,6 +2028,7 @@ static int cpufreq_governor_interactive(struct cpufreq_policy *policy,
 
 			cpufreq_param_set_init(tunables);
 #endif
+			tunables->max_freq_hysteresis = 100000;
 		} else {
 			memcpy(tunables, tuned_parameters[policy->cpu], sizeof(*tunables));
 			kfree(tuned_parameters[policy->cpu]);
