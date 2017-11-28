@@ -131,18 +131,18 @@ static void exynos_dm_hotplug_enable(void)
 		mutex_unlock(&dm_hotplug_lock);
 		return;
 	}
-	dm_hotplug_disable--;
+	dm_hotplug_disable = 0;
 	if (!in_suspend_prepared)
-		disable_dm_hotplug_before_suspend--;
+		disable_dm_hotplug_before_suspend = 0;
 	mutex_unlock(&dm_hotplug_lock);
 }
 
 static void exynos_dm_hotplug_disable(void)
 {
 	mutex_lock(&dm_hotplug_lock);
-	dm_hotplug_disable++;
+	dm_hotplug_disable = 1;
 	if (!in_suspend_prepared)
-		disable_dm_hotplug_before_suspend++;
+		disable_dm_hotplug_before_suspend = 1;
 	mutex_unlock(&dm_hotplug_lock);
 }
 
