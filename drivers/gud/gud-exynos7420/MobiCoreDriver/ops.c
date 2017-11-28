@@ -190,7 +190,7 @@ struct smc_log_entry {
 };
 
 static DEFINE_SPINLOCK(smc_log_lock);
-#define SMC_LOG_SIZE 3072
+#define SMC_LOG_SIZE 256
 struct smc_log_entry smc_history[SMC_LOG_SIZE];
 static uint32_t smc_log_idx;
 #endif
