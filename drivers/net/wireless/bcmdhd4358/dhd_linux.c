@@ -2,7 +2,7 @@
  * Broadcom Dongle Host Driver (DHD), Linux-specific network interface
  * Basically selected code segments from usb-cdc.c and usb-rndis.c
  *
- * Copyright (C) 1999-2016, Broadcom Corporation
+ * Copyright (C) 1999-2017, Broadcom Corporation
  * 
  *      Unless you and Broadcom execute a separate written software license
  * agreement governing use of this software, this software is licensed to you
@@ -22,7 +22,7 @@
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
  *
- * $Id: dhd_linux.c 676236 2016-12-21 03:14:12Z $
+ * $Id: dhd_linux.c 680234 2017-01-19 04:48:17Z $
  */
 
 #include <typedefs.h>
@@ -9948,6 +9948,11 @@ dhd_convert_memdump_type_to_str(uint32 type, char *buf)
 		case DUMP_TYPE_FOR_DEBUG:
 			type_str = "FOR_DEBUG";
 			break;
+#ifdef SUPPORT_LINKDOWN_RECOVERY
+		case DUMP_TYPE_READ_SHM_FAIL:
+			type_str = "READ_SHM_FAIL";
+			break;
+#endif /* SUPPORT_LINKDOWN_RECOVERY */
 		default:
 			type_str = "Unknown_type";
 			break;
@@ -10500,8 +10505,9 @@ int dhd_os_check_wakelock(dhd_pub_t *pub)
 int dhd_os_check_wakelock_all(dhd_pub_t *pub)
 {
 #ifdef CONFIG_HAS_WAKELOCK
-	int l1, l2, l3, l4, l6, l7, l8, l9;
+	int l1, l2, l3, l4, l7, l8, l9;
 	int l5 = 0;
+	int l6 = 0;
 	int c, lock_active;
 #endif /* CONFIG_HAS_WAKELOCK */
 #if defined(CONFIG_HAS_WAKELOCK) || (defined(BCMSDIO) && (LINUX_VERSION_CODE > \
@@ -10649,7 +10655,7 @@ dhd_os_scan_wake_unlock(dhd_pub_t *pub)
 	if (dhd) {
 		/* if wl_scanwake is active, unlock it */
 		if (wake_lock_active(&dhd->wl_scanwake)) {
-		wake_unlock(&dhd->wl_scanwake);
+			wake_unlock(&dhd->wl_scanwake);
 		}
 	}
 #endif /* CONFIG_HAS_WAKELOCK */

@@ -200,6 +200,9 @@ DHDCFLAGS += -DUSE_WFA_CERT_CONF
 # Customer scan timeout setting
 DHDCFLAGS += -DCUSTOMER_SCAN_TIMEOUT_SETTING
 
+# Enable HANG event test private command
+DHDCFLAGS += -DSUPPORT_TRIGGER_HANG_EVENT
+
 # Android Version Check from Platform source
 CANDIDATE_VERSION_PATH := ./../../build/core ../../../../../../build/core out
 FOUND_VERSION_PATH := $(foreach dir,$(CANDIDATE_VERSION_PATH), $(wildcard $(dir)/version_defaults.mk))
@@ -629,8 +632,8 @@ ifneq ($(CONFIG_MACH_UNIVERSAL7420),)
 DHDCFLAGS += -DDHD_OF_SUPPORT
 DHDCFLAGS += -DBCMPCIE_OOB_HOST_WAKE
 # For enable temperature throttling feature at BCM4358A3
-DHDCFLAGS += -DENABLE_TEMP_THROTTLING
-DHDCFLAGS += -DTEMP_THROTTLE_CONTROL_BIT=0xD
+# DHDCFLAGS += -DENABLE_TEMP_THROTTLING
+# DHDCFLAGS += -DTEMP_THROTTLE_CONTROL_BIT=0xD
 endif
 ifneq ($(CONFIG_MACH_UNIVERSAL5433),)
 DHDCFLAGS += -DDHD_OF_SUPPORT
