@@ -552,7 +552,7 @@ static int fb_state_change(struct notifier_block *nb, unsigned long val,
 		spin_lock_irqsave(&ws->lock, flags);
 		if (ws->is_screen_off != is_screen_off) {
 			ws->is_screen_off = is_screen_off;
-			if (ws->active && len < max) {
+			if (ws->active) {
 				if (is_screen_off)
 					ws->start_screen_off = now;
 				else
