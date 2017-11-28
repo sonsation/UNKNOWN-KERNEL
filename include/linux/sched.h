@@ -414,6 +414,7 @@ struct cpu_itimer {
 struct cputime {
 	cputime_t utime;
 	cputime_t stime;
+	raw_spinlock_t lock;
 };
 
 /**
