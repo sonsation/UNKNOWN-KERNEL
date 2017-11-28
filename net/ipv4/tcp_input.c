@@ -3250,8 +3250,10 @@ static int tcp_clean_rtx_queue(struct sock *sk, int prior_fackets,
 		}
 
 		tcp_ack_update_rtt(sk, flag, seq_rtt);
-		flag |= FLAG_SET_XMIT_TIMER;  /* set TLP or RTO timer */
 
+#ifndef CONFIG_MPTCP
+		flag |= FLAG_SET_XMIT_TIMER;  /* set TLP or RTO timer */
+#endif
 		if (tcp_is_reno(tp)) {
 			tcp_remove_reno_sacks(sk, pkts_acked);
 		} else {
@@ -3582,8 +3584,10 @@ static int tcp_ack(struct sock *sk,
 	if (tp->tlp_high_seq)
 		tcp_process_tlp_ack(sk, ack, flag);
 	/* If needed, reset TLP/RTO timer; RACK may later override this. */
+#ifndef CONFIG_MPTCP
 	if (flag & FLAG_SET_XMIT_TIMER)
 		tcp_set_xmit_timer(sk);
+#endif
 
 #ifdef CONFIG_MPTCP
 	if (mptcp(tp)) {
