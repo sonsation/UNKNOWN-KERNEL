@@ -220,7 +220,7 @@ int proximity_open_calibration(struct ssp_data *data)
 
 	iRet = cancel_filp->f_op->read(cancel_filp,
 		(u8 *)&data->uProxCanc, sizeof(unsigned int), &cancel_filp->f_pos);
-	if (iRet != sizeof(u8)) {
+	if (iRet < 0) {
 		pr_err("[SSP]: %s - Can't read the cancel data\n", __func__);
 		iRet = -EIO;
 	}
