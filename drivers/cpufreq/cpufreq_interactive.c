@@ -929,6 +929,8 @@ static void cpufreq_interactive_boost(struct cpufreq_interactive_tunables *tunab
 	unsigned long flags[2];
 	struct cpufreq_interactive_cpuinfo *pcpu;
 	struct cpumask boost_mask;
+	struct cpufreq_policy *policy = container_of(tunables->policy,
+						struct cpufreq_policy, policy);
 
 	tunables->boosted = true;
 
