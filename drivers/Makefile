@@ -184,6 +184,3 @@ obj-$(CONFIG_ESOC)		+= esoc/
 
 #LED MATRIX FGPA Driver
 obj-$(CONFIG_ICE5_FPGA_LED_MATRIX)	+= ledmatrix/
-
-# Android
-obj-$(CONFIG_ANDROID)	+= android/
