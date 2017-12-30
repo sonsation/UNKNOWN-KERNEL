@@ -2362,7 +2362,7 @@ static int __devinit max77843_fuelgauge_probe(struct platform_device *pdev)
 #if defined(CONFIG_DISABLE_SAVE_CAPACITY_MAX)
 	reg_data = max77843_read_word(fuelgauge->i2c, 0xD0);
 
-	if (reg_data >= 700 && reg_data <= 1000 && reg_data != fuelgauge->capacity_max) {
+	if (reg_data >= 900 && reg_data <= 1000 && reg_data != fuelgauge->capacity_max) {
 		pr_info("%s : Capacity Max Update (%d) -> (%d)\n",
 			__func__, fuelgauge->capacity_max, reg_data);
 		fuelgauge->capacity_max = reg_data;
