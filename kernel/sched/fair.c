@@ -3974,6 +3974,9 @@ static inline struct hmp_domain *hmp_faster_domain(int cpu)
 {
 	struct list_head *pos;
 
+	if (hmp_cpu_is_fastest(cpu))
+		return hmp_cpu_domain(cpu);
+
 	pos = &hmp_cpu_domain(cpu)->hmp_domains;
 	return list_entry(pos->prev, struct hmp_domain, hmp_domains);
 }
