@@ -554,14 +554,29 @@ static void set_new_param_set(unsigned int index,
 static void enter_mode(struct cpufreq_interactive_tunables * tunables)
 {
 	set_new_param_set(tunables->mode, tunables);
-	if(tunables->mode & SINGLE_MODE)
-		cluster0_min_freq = tunables->single_cluster0_min_freq;
-	if(tunables->mode & MULTI_MODE)
-		cluster0_min_freq = tunables->multi_cluster0_min_freq;
-	if(!hmp_boost) {
+
+	if(!hmp_boost && (tunables->mode & MULTI_MODE)) {
 		pr_debug("%s mp boost on", __func__);
 		(void)set_hmp_boost(1);
 		hmp_boost = true;
+
+		cluster0_min_freq = tunables->multi_cluster0_min_freq;
+
+	} else if(hmp_boost && (tunables->mode & SINGLE_MODE)) {
+
+		pr_debug("%s mp boost on", __func__);
+		(void)set_hmp_boost(0);
+		hmp_boost = false;
+
+		cluster0_min_freq = tunables->single_cluster0_min_freq;
+
+	} else if(hmp_boost && (tunables->mode & SINGLE_MODE)) {
+
+		pr_debug("%s mp boost on", __func__);
+		(void)set_hmp_boost(0);
+		hmp_boost = false;
+
+		cluster0_min_freq = tunables->single_cluster0_min_freq;
 	}
 
 	queue_work(mode_auto_change_minlock_wq, &mode_auto_change_minlock_work);
